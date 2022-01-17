@@ -1,0 +1,27 @@
++=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=+
+
+copyFiles - Faz cópia de arquivos, Organizando-os em pastas.
+
++=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=+
+
+Caso o Python não esteja instalado em seu computador, 					
+acesse: https://www.python.org/ e faça o download.
+
++=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=+
+
+Instalação:
+
+Basta rodá-lo na mesma pasta onde estão os arquivos que deseja copiar.
+
+Requerimentos:
+
+Para instalar os modulos necessários, faça:
+
+No Linux:
+	Abra o terminal e digite: pip3 install nome_do_módulo
+	
+No Windows:
+ 	Abra o prompt e digite: pip install nome_do_módulo
+
++=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=+
+	
