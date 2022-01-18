@@ -13,8 +13,7 @@ import psutil
 
 
 corFundo = "black"
-listaEnderecos = ['http://helpdesk.ipmjp.pb.gov.br/',]
-# 'https://mail.ipmjp.pb.gov.br/']
+listaEnderecos = ['link_1', 'link_n']
 
 
 def abriPagina(link, usuario, senha, idLogin, idSenha, classBotao):
