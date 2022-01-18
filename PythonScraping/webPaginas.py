@@ -7,8 +7,7 @@ import re
 from tkinter import *
 
 corFundo = "black"
-listaEnderecos = ['http://helpdesk.ipmjp.pb.gov.br/', 'https://mail.ipmjp.pb.gov.br/', 'https://www.ipmjp.pb.gov.br/ramais/']
-#listaEnderecos = ['https://www.ipmjp.pb.gov.br/ramais/']
+listaEnderecos = ['link_1', 'link_2', 'link_n']
      
 def abriPagina(link, usuario, senha, idLogin, idSenha, classBotao):
     driver = webdriver.Firefox()
