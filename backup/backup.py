@@ -1,7 +1,17 @@
 #! python3
-# backup.py
-# Copia os arquivos das pastas (Desktop, Documents e Downloads) dos usuários 
-# que tenhasm pelo menos um arquivo em qualquer uma delas.
+
+#+--------------------------------------------------Descrição-------------------------------------------------------+
+#| - Copia os arquivos das pastas (Desktop, Documents e Downloads) dos usuários que tenham pelo menos um arquivo    |
+#|   em qualquer uma delas.     		                                                                            |
+#+----------------------------------------------------Autor---------------------------------------------------------+
+#| - Wellington        									         	                                                |
+#+----------------------------------------------Sistemas testados---------------------------------------------------+
+#| - Windows 10(x64)		                    				 		                                            |
+#+-------------------------------------------------IMPORTANTE-------------------------------------------------------+
+#| - Precisa ser salvo na unidade C:\	                                                                            |
+#| - Executar o 'backup.bat'                                                                                        |
+#| - Executar como administrador                                                                                    |								               
+#+------------------------------------------------------------------------------------------------------------------+
 
 
 import os, shutil, socket
@@ -34,6 +44,7 @@ for folderName, subfolders, filenames in os.walk('C:\\Users'):
                     
                 print('Adicionando %s em %s...' % (file, listDir[2]))
                 shutil.copy('C:\\Users\\'+listDir[2]+'\\'+dir+'\\'+file, fullPathBackup)
+                
 print()
 print("-=-" * 30)
 print('Backup realizado. Verifique os arquivos em '.rjust(50) + backup)  
