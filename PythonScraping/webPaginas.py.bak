@@ -54,7 +54,7 @@ def click(usuario, senha):
         elif re.search('ramais', link):
             dadosAcesso = (link, 'None', 'None', 'None')
         
-        abriPagina(dadosAcesso[0], usuario, senha, dadosAcesso[1], dadosAcesso[2], dadosAcesso[3])
+        abriPagina(dadosAcesso[0], 'None', 'None', dadosAcesso[1], dadosAcesso[2], dadosAcesso[3])
         
     print('-' * 30)
     print('*******      Done!     *******')
