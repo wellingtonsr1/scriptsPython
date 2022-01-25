@@ -46,11 +46,9 @@ def click(usuario, senha):
             flag = 2
             dadosAcesso = (link, 'None', 'None', 'None')
         
-<<<<<<< HEAD
+
         abriPagina(dadosAcesso[0], 'None', 'None', dadosAcesso[1], dadosAcesso[2], dadosAcesso[3], flag, driver)
-=======
-        abriPagina(dadosAcesso[0], usuario, senha, dadosAcesso[1], dadosAcesso[2], dadosAcesso[3])
->>>>>>> 5741c8f4d3e5929e71d393bae5b7ded424e2a204
+
         
     print('-' * 30)
     print('*******      Done!     *******')
