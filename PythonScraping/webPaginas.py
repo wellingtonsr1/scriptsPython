@@ -1,6 +1,5 @@
 #! python3
 
-from matplotlib.pyplot import flag
 from selenium import webdriver
 from time import sleep
 from selenium.webdriver.common.by import By
@@ -8,8 +7,8 @@ import re
 from tkinter import *
 
 corFundo = "black"
-listaEnderecos = ['link_1', 'link_2', 'link_n']
-     
+listaEnderecos = ['link_1', 'Link_n']   
+
 
 def criarJanela():
     janela = Tk()
@@ -35,37 +34,37 @@ def criarJanela():
 def click(usuario, senha):
     driver = webdriver.Firefox()
 
-    for link in listaEnderecos:
-        if re.search('helpdesk', link):
-            flag = 0
-            dadosAcesso = (link, 'login_name', 'login_password', 'submit')
-        elif re.search('mail', link):
-            flag = 1
-            dadosAcesso = (link, 'username', 'password', 'ZLoginButton')
-        elif re.search('ramais', link):
-            flag = 2
-            dadosAcesso = (link, 'None', 'None', 'None')
-        
+    for idx in range(len(listaEnderecos)):
+        if re.search('helpdesk', listaEnderecos[idx]):
+            dadosAcesso = (listaEnderecos[idx], 'login_name', 'login_password', 'submit')
+        elif re.search('mail', listaEnderecos[idx]):
+            dadosAcesso = (listaEnderecos[idx], 'username', 'password', 'ZLoginButton')
+        elif re.search('ramais', listaEnderecos[idx]):
+            dadosAcesso = (listaEnderecos[idx], 'None', 'None', 'None')
+        elif re.search('114', listaEnderecos[idx]):
+            dadosAcesso = (listaEnderecos[idx], 'username', 'password', 'submit')
 
-        abriPagina(dadosAcesso[0], 'None', 'None', dadosAcesso[1], dadosAcesso[2], dadosAcesso[3], flag, driver)
+        flag = idx
+        abriPagina(dadosAcesso[0], usuario, senha, dadosAcesso[1], dadosAcesso[2], dadosAcesso[3], flag, driver)
 
-        
     print('-' * 30)
     print('*******      Done!     *******')
     print('-' * 30)
     exit(0)
 
 def abriPagina(link, usuario, senha, idLogin, idSenha, classBotao, flag, driver):
-
     if flag != 0:
         driver.execute_script("window.open('');") 
         driver.switch_to.window(driver.window_handles[flag])
 
     driver.get(link)
+    driver.maximize_window() 
+    driver.implicitly_wait(20) 
 
     campoUsuario = driver.find_element(By.ID, idLogin)
     campoSenha = driver.find_element(By.ID, idSenha)
-    btn = driver.find_element(By.CLASS_NAME, classBotao)
+    #btn = driver.find_element(By.CLASS_NAME, classBotao)
+    btn = driver.find_element(By.ID, classBotao)
 
     sleep(1)
     campoUsuario.send_keys(usuario)
@@ -74,7 +73,9 @@ def abriPagina(link, usuario, senha, idLogin, idSenha, classBotao, flag, driver)
     sleep(1)
     btn.click()
 
-criarJanela()
+
+if __name__ == '__main__':
+   criarJanela()
 
 
 
