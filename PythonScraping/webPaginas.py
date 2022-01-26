@@ -22,7 +22,7 @@ backgroundColor = "black"
 addressList = ['link_1', 'link_n']   
 
 
-def dislplayLoginWindow():
+def displayLoginWindow():
     window = Tk()
     window.title("Login")
     window['bg'] = backgroundColor
@@ -98,7 +98,7 @@ def openWebBrowser(link, user, password, loginId, passowrdId, btnClass, flag, dr
 
 
 if __name__ == '__main__':
-   dislplayLoginWindow()
+   displayLoginWindow()
 
 
 
