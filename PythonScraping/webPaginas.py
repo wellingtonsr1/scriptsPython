@@ -1,5 +1,16 @@
 #! python3
 
+#+--------------------------------------------------Descrição-------------------------------------------------------+
+#| - Faz login de forma automática em algumas páginas web     		                                                |
+#+----------------------------------------------------Autor---------------------------------------------------------+
+#| - Wellington        									         	                                                |
+#+----------------------------------------------Sistemas testados---------------------------------------------------+
+#| - Windows 10(x64)		                    				 		                                            |
+#+-------------------------------------------------IMPORTANTE-------------------------------------------------------+
+#|                                                                                                                  |								               
+#+------------------------------------------------------------------------------------------------------------------+
+
+
 from selenium import webdriver
 from time import sleep
 from selenium.webdriver.common.by import By
@@ -8,7 +19,7 @@ import re
 
 
 backgroundColor = "black"
-addressList = ['http://helpdesk.ipmjp.pb.gov.br/', 'https://mail.ipmjp.pb.gov.br/']   
+addressList = ['link_1', 'link_n']   
 
 
 def dislplayLoginWindow():
@@ -32,6 +43,7 @@ def dislplayLoginWindow():
     window.resizable(width=0, height=0)
     window.mainloop()
 
+
 def btnClick(user, password):
     driver = webdriver.Firefox()
 
@@ -52,6 +64,7 @@ def btnClick(user, password):
     print('*******      Done!     *******')
     print('-' * 30)
     exit(0)
+
 
 def openWebBrowser(link, user, password, loginId, passowrdId, btnClass, flag, driver):
     if flag != 0:
