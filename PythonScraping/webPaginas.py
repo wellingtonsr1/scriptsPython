@@ -58,7 +58,16 @@ def btnClick(user, password):
             accessData = (addressList[idx], 'username', 'password', 'submit')
 
         flag = idx
+
+        if user == '' or password == '':
+            print('-' * 40)
+            print('* Favor, verficar os dados informados. *'.center(40))
+            print('-' * 40)
+            driver.quit()
+            exit(0)
+
         openWebBrowser(accessData[0], user, password, accessData[1], accessData[2], accessData[3], flag, driver)
+        
 
     print('-' * 30)
     print('*******      Done!     *******')
