@@ -1,0 +1,42 @@
+1643158244655	geckodriver	INFO	Listening on 127.0.0.1:33707
+1643158244662	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "42501" "-no-remote" "-profile" "/tmp/rust_mozprofileER7a7i"
+1643158246510	Marionette	INFO	Listening on port 38713
+1643158246571	Marionette	WARN	TLS certificate errors will be ignored for this session
+1643158255894	Marionette	INFO	Stopped listening on port 38713
+1643158431706	geckodriver	INFO	Listening on 127.0.0.1:55805
+1643158431713	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "56049" "-no-remote" "-profile" "/tmp/rust_mozprofileY5vFZY"
+1643158433522	Marionette	INFO	Listening on port 32891
+1643158433620	Marionette	WARN	TLS certificate errors will be ignored for this session
+1643158441267	Marionette	INFO	Stopped listening on port 32891
+1643158495609	geckodriver	INFO	Listening on 127.0.0.1:46579
+1643158495615	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "60407" "-no-remote" "-profile" "/tmp/rust_mozprofilemYyRdX"
+1643158497390	Marionette	INFO	Listening on port 45243
+1643158497444	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: chrome://marionette/content/proxy.js, line 287: NS_ERROR_NOT_INITIALIZED
+1643158510033	Marionette	INFO	Stopped listening on port 45243
+1643158545367	geckodriver	INFO	Listening on 127.0.0.1:36937
+1643158545372	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "50879" "-no-remote" "-profile" "/tmp/rust_mozprofilexOqMmt"
+1643158547110	Marionette	INFO	Listening on port 42279
+1643158547179	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://helpdesk.ipmjp.pb.gov.br/lib/jquery/js/jquery-1.10.2.min.js?v=9.2.2, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript warning: https://mail.ipmjp.pb.gov.br/js/Startup1_2_all.js.zgz?v=140925172016, line 10969: unreachable code after return statement
+JavaScript warning: https://mail.ipmjp.pb.gov.br/js/Startup1_2_all.js.zgz?v=140925172016, line 16016: unreachable code after return statement
+JavaScript warning: https://mail.ipmjp.pb.gov.br/js/Startup1_2_all.js.zgz?v=140925172016, line 10969: unreachable code after return statement
+JavaScript warning: https://mail.ipmjp.pb.gov.br/, line 9211: unreachable code after return statement
+1643158567393	Marionette	INFO	Stopped listening on port 42279
+1643158613245	geckodriver	INFO	Listening on 127.0.0.1:46857
+1643158613252	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "48863" "-no-remote" "-profile" "/tmp/rust_mozprofileoG1NhQ"
+1643158615019	Marionette	INFO	Listening on port 46861
+1643158615071	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://helpdesk.ipmjp.pb.gov.br/lib/jquery/js/jquery-1.10.2.min.js?v=9.2.2, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript warning: https://mail.ipmjp.pb.gov.br/js/Startup1_2_all.js.zgz?v=140925172016, line 10969: unreachable code after return statement
+JavaScript warning: https://mail.ipmjp.pb.gov.br/js/Startup1_2_all.js.zgz?v=140925172016, line 16016: unreachable code after return statement
+JavaScript warning: https://mail.ipmjp.pb.gov.br/js/Startup1_2_all.js.zgz?v=140925172016, line 10969: unreachable code after return statement
+JavaScript warning: https://mail.ipmjp.pb.gov.br/, line 9211: unreachable code after return statement
+JavaScript error: https://mail.ipmjp.pb.gov.br/service/zimlet/res/Zimlets-nodev_all.js.zgz?language=pt&country=BR&cosId=e00428a1-0c00-11d9-836a-000d93afea2a, line 43060: ReferenceError: ZmBrowserAlert is not defined
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+JavaScript error: https://mail.ipmjp.pb.gov.br/ line 1061 > eval, line 8887: NS_ERROR_FAILURE: 
+1643158636080	Marionette	INFO	Stopped listening on port 46861
