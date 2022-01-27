@@ -11,9 +11,9 @@
 #+------------------------------------------------------------------------------------------------------------------+
 
 
+from selenium.webdriver.common.by import By
 from selenium import webdriver
 from time import sleep
-from selenium.webdriver.common.by import By
 from tkinter import *
 import re
 
@@ -22,7 +22,7 @@ backgroundColor = "black"
 addressList = ['link_1', 'link_n']   
 
 
-def dislplayLoginWindow():
+def displayLoginWindow():
     window = Tk()
     window.title("Login")
     window['bg'] = backgroundColor
@@ -57,22 +57,20 @@ def btnClick(user, password):
         elif re.search('114', addressList[idx]):
             accessData = (addressList[idx], 'username', 'password', 'submit')
 
-        flag = idx
-
         if user == '' or password == '':
             print('-' * 40)
             print('* Favor, verficar os dados informados. *'.center(40))
             print('-' * 40)
             driver.quit()
-            exit(0)
+            sleep(3)
+            raise SystemExit()
 
-        openWebBrowser(accessData[0], user, password, accessData[1], accessData[2], accessData[3], flag, driver)
+        openWebBrowser(accessData[0], user, password, accessData[1], accessData[2], accessData[3], idx, driver)
         
-
     print('-' * 30)
     print('*******      Done!     *******')
     print('-' * 30)
-    exit(0)
+    raise SystemExit()
 
 
 def openWebBrowser(link, user, password, loginId, passowrdId, btnClass, flag, driver):
@@ -98,7 +96,7 @@ def openWebBrowser(link, user, password, loginId, passowrdId, btnClass, flag, dr
 
 
 if __name__ == '__main__':
-   dislplayLoginWindow()
+   displayLoginWindow()
 
 
 
