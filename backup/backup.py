@@ -17,9 +17,11 @@
 import os, shutil, socket
 from datetime import datetime
 
+root = 'c:\\users'
 currentDate = datetime.today().strftime('%d-%m-%Y')
-backup = 'C:\\Backup_'+socket.gethostname()+'_'+currentDate
+pathBackup = 'C:\\bkp_'+socket.gethostname()+'_'+currentDate
 extList = ['.pdf', '.docx', '.xlsx', '.odt']
+fileDirectory = 'Arquivos_'
 
 def header():
     print("-=-" * 30)
@@ -29,38 +31,34 @@ def header():
     print("-=-" * 30)
     print()
 
-def foot():
+def foot(pathBkp):
     print()
     print("-=-" * 30)
-    print('Backup realizado. Verifique os arquivos em '.rjust(50) + backup)  
+    print('Backup realizado. Verifique os arquivos em '.rjust(50) + pathBkp)  
     print()     
-
 
 def main():  
     header()
     
-    for folderName, subfolders, filenames in os.walk('C:\\Users'): 
-        dirList = folderName.split(os.path.sep)
-        for dir in dirList:
-            if dir != 'Desktop' and dir != 'Documents' and dir != 'Downloads':
-                continue
-            
-            os.chdir('C:\\Users\\'+dirList[2])
-            fullPathBackup = 'C:\\Backup_'+socket.gethostname()+'_'+currentDate+'\\'+dirList[2]
-            
-            for file in filenames:
+    for userFolder in [userFolders for userFolders in os.listdir(root)]:
+        fullPathBackup = os.path.join(pathBackup, userFolder)
+        for folder, subfolders, files in os.walk(os.path.join(root, userFolder)):
+            for file in files:
+                pathFile = os.path.join(folder, file)
+                
                 for ext in extList:
+                    fileDirectoryByExt = fileDirectory+ext.replace('.', '')
                     if file.endswith(ext):
-                        if not os.path.exists(fullPathBackup):
-                            os.makedirs(fullPathBackup)
-                        #os.chdir('C:\\Users\\'+dirList[2]+'\\'+dir+'\\') 
-                        #print(os.getcwd())
-                        print('Adicionado [%s] na pasta [%s]' % (file, dirList[2]))
-                        shutil.copy('C:\\Users\\'+dirList[2]+'\\'+dir+'\\'+file, fullPathBackup)
-                        
-                        
-    foot() 
+                        if not os.path.exists(os.path.join(fullPathBackup, fileDirectoryByExt)):
+                            os.makedirs(os.path.join(fullPathBackup, fileDirectoryByExt))
+                            
+                        print('Adicionando [%s] na pasta [%s] em [%s]' % (file, fileDirectoryByExt, userFolder))
+                        shutil.copy(pathFile, os.path.join(fullPathBackup+'\\'+fileDirectoryByExt, file))
+                    continue
 
+    foot(pathBackup)
+                        
+                
  
  
 if __name__ == '__main__':
