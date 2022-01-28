@@ -20,7 +20,7 @@ from datetime import datetime
 root = 'c:\\users'
 currentDate = datetime.today().strftime('%d-%m-%Y')
 pathBackup = 'C:\\bkp_'+socket.gethostname()+'_'+currentDate
-extList = ['.pdf', '.docx', '.xlsx', '.odt']
+extList = ['.pdf', '.docx', '.xlsx', '.odt', '.ods']
 fileDirectory = 'Arquivos_'
 
 def header():
@@ -31,11 +31,11 @@ def header():
     print("-=-" * 30)
     print()
 
-def foot(pathBkp):
+def foot():
     print()
     print("-=-" * 30)
-    print('Backup realizado. Verifique os arquivos em '.rjust(50) + pathBkp)  
-    print()     
+    print('Backup realizado. Verifique os arquivos em '.rjust(50) + pathBackup)  
+    print()    
 
 def main():  
     header()
@@ -44,21 +44,26 @@ def main():
         fullPathBackup = os.path.join(pathBackup, userFolder)
         for folder, subfolders, files in os.walk(os.path.join(root, userFolder)):
             for file in files:
-                pathFile = os.path.join(folder, file)
-                
+                #pathFile = os.path.join(folder, file)
+                origin = os.path.join(folder, file)
                 for ext in extList:
                     fileDirectoryByExt = fileDirectory+ext.replace('.', '')
                     if file.endswith(ext):
                         if not os.path.exists(os.path.join(fullPathBackup, fileDirectoryByExt)):
                             os.makedirs(os.path.join(fullPathBackup, fileDirectoryByExt))
-                            
+
+                        destination = os.path.join(fullPathBackup+'\\'+fileDirectoryByExt, file) 
+
                         print('Adicionando [%s] na pasta [%s] em [%s]' % (file, fileDirectoryByExt, userFolder))
-                        shutil.copy(pathFile, os.path.join(fullPathBackup+'\\'+fileDirectoryByExt, file))
+                        #shutil.copy(pathFile, os.path.join(fullPathBackup+'\\'+fileDirectoryByExt, file))
+                        shutil.copy(origin, destination)
+
                     continue
 
-    foot(pathBackup)
-                        
-                
+    foot()
+    print('Pressione ENTER pra continuar.')
+    os.system('pause > NULL') 
+                                
  
  
 if __name__ == '__main__':
