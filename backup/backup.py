@@ -40,11 +40,13 @@ def foot():
 def main():  
     header()
     
+    # Lista as pastas dos usuários em C:\Users
     for userFolder in [userFolders for userFolders in os.listdir(root)]:
         fullPathBackup = os.path.join(pathBackup, userFolder)
+
+        # Varre a árvore de diretórios a partir de 'C:\Users\pastaUsuário'
         for folder, subfolders, files in os.walk(os.path.join(root, userFolder)):
             for file in files:
-                #pathFile = os.path.join(folder, file)
                 origin = os.path.join(folder, file)
                 for ext in extList:
                     fileDirectoryByExt = fileDirectory+ext.replace('.', '')
@@ -53,9 +55,7 @@ def main():
                             os.makedirs(os.path.join(fullPathBackup, fileDirectoryByExt))
 
                         destination = os.path.join(fullPathBackup+'\\'+fileDirectoryByExt, file) 
-
                         print('Adicionando [%s] na pasta [%s] em [%s]' % (file, fileDirectoryByExt, userFolder))
-                        #shutil.copy(pathFile, os.path.join(fullPathBackup+'\\'+fileDirectoryByExt, file))
                         shutil.copy(origin, destination)
 
                     continue
