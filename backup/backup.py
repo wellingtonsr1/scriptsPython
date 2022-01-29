@@ -20,7 +20,6 @@ from time import sleep
 
 
 root = 'C:\\users'
-drive = 'C:\\'
 currentDate = datetime.today().strftime('%d-%m-%Y')
 backupFolder = 'bkp_'+socket.gethostname()+'_'+currentDate
 extList = ['.pdf', '.docx', '.xlsx', '.odt', '.ods']
@@ -28,9 +27,9 @@ fileDirectory = 'Arquivos_'
 
 def header(statusMessage):
     print("-=-" * 30)
-    print("Status: {}".center(40).format(statusMessage), end='')
+    print("Status: {}".center(25).format(statusMessage), end='')
     print("Máquina: " + socket.gethostname().ljust(20), end='')
-    print("Data: " + currentDate.ljust(30))
+    print("Data: " + currentDate.ljust(20))
     print("-=-" * 30)
     print()
 
@@ -41,7 +40,7 @@ def foot():
     print('Pressione ENTER pra continuar.')
     os.system('pause > NULL' if os.name == 'nt' else 'continue') 
 
-def finalInformation():
+def finalInformation(drive):
     cleanSceen()
     header('Backup realizado')
     print(' Verifique os arquivos em {}'.rjust(50).format(os.path.join(drive, backupFolder)))
@@ -53,14 +52,21 @@ def getUserFolders():
     listUserFolders = []
     for userFolder in os.listdir(root):
         if os.path.isdir(os.path.join(root, userFolder)):
-            listUserFolders.append(userFolder)
-            
+            listUserFolders.append(userFolder)    
         continue
     return listUserFolders
 
+def getDrive():
+    drive = input("Informe a unidade de disco. (Tecle ENTER para unidade C:\): ")
+    if drive == '':
+        drive = 'C'
+    return drive
+
 def display():
     lineCount = 0    
-    
+    drive = getDrive()+':\\'
+    header('Backup iniciado')
+
     for userFolder in getUserFolders():
         # C:\\bkp_NomeMaquina_dataBackup\pastaUsusario
         pathBackupFolder = os.path.join(os.path.join(drive, backupFolder), userFolder)
@@ -82,7 +88,7 @@ def display():
                         
                         try:
                             shutil.copy(origin, destination)
-                            if lineCount == 3:
+                            if lineCount == 20:
                                 cleanSceen()
                                 header('Backup iniciado.')
                                 lineCount = 0
@@ -97,10 +103,12 @@ def display():
                             raise SystemExit()
                         
                     continue
-    finalInformation()
+    finalInformation(drive)
                                 
 def main():  
-    header('Backup iniciado.')
+    print("-=-" * 30)
+    print('S I S T E M A  D E  B A C K U P'.center(100))
+    print("-=-" * 30)
     display()
     foot()
 
