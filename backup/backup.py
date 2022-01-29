@@ -16,6 +16,8 @@
 
 import os, shutil, socket
 from datetime import datetime
+from time import sleep
+from xxlimited import foo
 
 root = 'C:\\users'
 drive = 'C:\\'
@@ -24,9 +26,9 @@ backupFolder = 'bkp_'+socket.gethostname()+'_'+currentDate
 extList = ['.pdf', '.docx', '.xlsx', '.odt', '.ods']
 fileDirectory = 'Arquivos_'
 
-def header():
+def header(statusMessage):
     print("-=-" * 30)
-    print("Iniciando o backup...".center(40), end='')
+    print("Status: {}".center(40).format(statusMessage), end='')
     print("Máquina: " + socket.gethostname().ljust(20), end='')
     print("Data: " + currentDate.ljust(30))
     print("-=-" * 30)
@@ -35,14 +37,31 @@ def header():
 def foot():
     print()
     print("-=-" * 30)
-    print('Backup realizado. Verifique os arquivos em {}'.rjust(50).format(os.path.join(drive, backupFolder)))
-    print()    
+    print()  
+    print('Pressione ENTER pra continuar.')
+    os.system('pause > NULL' if os.name == 'nt' else 'continue') 
 
-def main():  
-    header()
+def finalInformation():
+    cleanSceen()
+    header('Backup realizado')
+    print(' Verifique os arquivos em {}'.rjust(50).format(os.path.join(drive, backupFolder)))
+
+def cleanSceen():
+    os.system('cls') 
+
+def getUserFolders():
+    listUserFolders = []
+    for userFolder in os.listdir(root):
+        if os.path.isdir(os.path.join(root, userFolder)):
+            listUserFolders.append(userFolder)
+            
+        continue
+    return listUserFolders
+
+def display():
+    lineCount = 0    
     
-    # Lista as pastas dos usuários em 'C:\Users'
-    for userFolder in [userFolders for userFolders in os.listdir(root)]:
+    for userFolder in getUserFolders():
         # C:\\bkp_NomeMaquina_dataBackup\pastaUsusario
         pathBackupFolder = os.path.join(os.path.join(drive, backupFolder), userFolder)
 
@@ -60,17 +79,32 @@ def main():
                             os.makedirs(fullBackupFolder)
 
                         destination = os.path.join(fullBackupFolder, file) 
-                        print('Adicionando [{}] na pasta [{}] em [{}]'.format(file, fileDirectoryByExt, userFolder))
-                        shutil.copy(origin, destination)
+                        
+                        try:
+                            shutil.copy(origin, destination)
+                            if lineCount == 3:
+                                cleanSceen()
+                                header('Backup iniciado.')
+                                lineCount = 0
 
+                            print('Adicionado [{}] na pasta [{}] em [{}]'.format(file, fileDirectoryByExt, userFolder))
+                            sleep(0.3)
+                            lineCount += 1
+                        except Exception as err:
+                            print('Error: {}'.format(err))
+                            print()
+                            foot()
+                            raise SystemExit()
+                        
                     continue
-
-    foot()
-    print('Pressione ENTER pra continuar.')
-    os.system('pause > NULL') 
+    finalInformation()
                                 
- 
- 
+def main():  
+    header('Backup iniciado.')
+    display()
+    foot()
+
+
 if __name__ == '__main__':
     main()
 
