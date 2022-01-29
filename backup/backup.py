@@ -17,7 +17,7 @@
 import os, shutil, socket
 from datetime import datetime
 from time import sleep
-from xxlimited import foo
+
 
 root = 'C:\\users'
 drive = 'C:\\'
