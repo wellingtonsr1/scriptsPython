@@ -27,6 +27,7 @@ extList = ['.pdf', '.docx', '.xlsx', '.odt', '.ods']
 fileDirectory = 'Arquivos_'
 
 def header(statusMessage):
+    cleanSceen()
     print("-=-" * 30)
     print("Status: {}".center(25).format(statusMessage), end='')
     print("Máquina: " + socket.gethostname().ljust(20), end='')
@@ -40,9 +41,9 @@ def foot():
     print()  
     print('Pressione ENTER pra continuar.')
     os.system('pause > NULL' if os.name == 'nt' else 'continue') 
+    raise SystemExit()
 
 def finalInformation(drive):
-    cleanSceen()
     header('Backup realizado')
     print(' Verifique os arquivos em {}'.rjust(50).format(os.path.join(drive, backupFolder)))
 
@@ -58,60 +59,59 @@ def getUserFolders():
     return listUserFolders
 
 def getDrive():
-    drive = input("Onde deseja salvar os arquivos? (Tecle ENTER para unidade C:\): ".rjust(66))
-    drive = re.sub(r'\s+', '', drive)
+    drive = re.sub(r'\s+', '', input("Onde deseja salvar os arquivos? (Tecle ENTER para unidade C:\): ".rjust(66)))
     if drive == '':
         drive = 'C'
-    return drive
+    drive = drive+':\\'
+    if os.path.exists(drive):
+        return drive.upper()
+    else:
+        print()
+        print('A unidade de disco informada não existe.'.center(95))
+        foot()
 
 def processingCore():
     lineCount = 0   
+    drive = getDrive()
+    
+    header('Backup iniciado')
 
-    drive = getDrive()+':\\'
-    if os.path.exists(drive):
-        header('Backup iniciado')
+    for userFolder in getUserFolders():
+        # C:\\bkp_NomeMaquina_dataBackup\pastaUsusario
+        pathBackupFolder = os.path.join(os.path.join(drive, backupFolder), userFolder)
 
-        for userFolder in getUserFolders():
-            # C:\\bkp_NomeMaquina_dataBackup\pastaUsusario
-            pathBackupFolder = os.path.join(os.path.join(drive, backupFolder), userFolder)
+        # Varre a árvore de diretórios a partir de 'C:\Users\pastaUsuário'
+        for folder, subfolders, files in os.walk(os.path.join(root, userFolder)):
+            for file in files:
+                origin = os.path.join(folder, file)
+                for ext in extList:
+                    # Cria o diretório 'Arquivos_pdf', 'Arquivos_docx' etc
+                    fileDirectoryByExt = fileDirectory+ext.replace('.', '')
+                    if file.endswith(ext):
+                        # Cria 'C:\\bkp_NomeMaquina_dataCriaçãoBackup\pastaUsusário\Arquivos_EXT'
+                        fullBackupFolder = os.path.join(pathBackupFolder, fileDirectoryByExt)
+                        if not os.path.exists(fullBackupFolder):
+                            os.makedirs(fullBackupFolder)
+                        
+                        destination = os.path.join(fullBackupFolder, file) 
+                        
+                        try:
+                            shutil.copy(origin, destination)
+                            if lineCount == 20:
+                                cleanSceen()
+                                header('Backup iniciado.')
+                                lineCount = 0
 
-            # Varre a árvore de diretórios a partir de 'C:\Users\pastaUsuário'
-            for folder, subfolders, files in os.walk(os.path.join(root, userFolder)):
-                for file in files:
-                    origin = os.path.join(folder, file)
-                    for ext in extList:
-                        # Cria o diretório 'Arquivos_pdf', 'Arquivos_docx' etc
-                        fileDirectoryByExt = fileDirectory+ext.replace('.', '')
-                        if file.endswith(ext):
-                            # Cria 'C:\\bkp_NomeMaquina_dataCriaçãoBackup\pastaUsusário\Arquivos_EXT'
-                            fullBackupFolder = os.path.join(pathBackupFolder, fileDirectoryByExt)
-                            if not os.path.exists(fullBackupFolder):
-                                os.makedirs(fullBackupFolder)
-                            
-                            destination = os.path.join(fullBackupFolder, file) 
-                            
-                            try:
-                                shutil.copy(origin, destination)
-                                if lineCount == 20:
-                                    cleanSceen()
-                                    header('Backup iniciado.')
-                                    lineCount = 0
-
-                                print('Adicionado [{}] na pasta [{}] em [{}]'.format(file, fileDirectoryByExt, userFolder))
-                                sleep(0.3)
-                                lineCount += 1
-                            except Exception as err:
-                                print('Error: {}'.format(err))
-                                print()
-                                foot()
-                                raise SystemExit()
-
-                        continue
-
-        finalInformation(drive)
-    else:
-        print()
-        print('A unidade de disco informada não existe.')
+                            print('Adicionado [{}] na pasta [{}] em [{}]'.format(file, fileDirectoryByExt, userFolder))
+                            sleep(0.3)
+                            lineCount += 1
+                        except Exception as err:
+                            print('Error: {}'.format(err))
+                            print()
+                            foot()                        
+                    continue
+    finalInformation(drive)
+    
                                 
 def main():  
     print("-=-" * 30)
