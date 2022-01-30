@@ -15,6 +15,7 @@
 
 
 import os, shutil, socket
+import re
 from datetime import datetime
 from time import sleep
 
@@ -57,59 +58,66 @@ def getUserFolders():
     return listUserFolders
 
 def getDrive():
-    drive = input("Informe a unidade de disco. (Tecle ENTER para unidade C:\): ")
+    drive = input("Onde deseja salvar os arquivos? (Tecle ENTER para unidade C:\): ".rjust(66))
+    drive = re.sub(r'\s+', '', drive)
     if drive == '':
         drive = 'C'
     return drive
 
-def display():
-    lineCount = 0    
+def processingCore():
+    lineCount = 0   
+
     drive = getDrive()+':\\'
-    header('Backup iniciado')
+    if os.path.exists(drive):
+        header('Backup iniciado')
 
-    for userFolder in getUserFolders():
-        # C:\\bkp_NomeMaquina_dataBackup\pastaUsusario
-        pathBackupFolder = os.path.join(os.path.join(drive, backupFolder), userFolder)
+        for userFolder in getUserFolders():
+            # C:\\bkp_NomeMaquina_dataBackup\pastaUsusario
+            pathBackupFolder = os.path.join(os.path.join(drive, backupFolder), userFolder)
 
-        # Varre a árvore de diretórios a partir de 'C:\Users\pastaUsuário'
-        for folder, subfolders, files in os.walk(os.path.join(root, userFolder)):
-            for file in files:
-                origin = os.path.join(folder, file)
-                for ext in extList:
-                    # Cria o diretório 'Arquivos_pdf', 'Arquivos_docx' etc
-                    fileDirectoryByExt = fileDirectory+ext.replace('.', '')
-                    if file.endswith(ext):
-                        # Cria 'C:\\bkp_NomeMaquina_dataCriaçãoBackup\pastaUsusário\Arquivos_EXT'
-                        fullBackupFolder = os.path.join(pathBackupFolder, fileDirectoryByExt)
-                        if not os.path.exists(fullBackupFolder):
-                            os.makedirs(fullBackupFolder)
+            # Varre a árvore de diretórios a partir de 'C:\Users\pastaUsuário'
+            for folder, subfolders, files in os.walk(os.path.join(root, userFolder)):
+                for file in files:
+                    origin = os.path.join(folder, file)
+                    for ext in extList:
+                        # Cria o diretório 'Arquivos_pdf', 'Arquivos_docx' etc
+                        fileDirectoryByExt = fileDirectory+ext.replace('.', '')
+                        if file.endswith(ext):
+                            # Cria 'C:\\bkp_NomeMaquina_dataCriaçãoBackup\pastaUsusário\Arquivos_EXT'
+                            fullBackupFolder = os.path.join(pathBackupFolder, fileDirectoryByExt)
+                            if not os.path.exists(fullBackupFolder):
+                                os.makedirs(fullBackupFolder)
+                            
+                            destination = os.path.join(fullBackupFolder, file) 
+                            
+                            try:
+                                shutil.copy(origin, destination)
+                                if lineCount == 20:
+                                    cleanSceen()
+                                    header('Backup iniciado.')
+                                    lineCount = 0
 
-                        destination = os.path.join(fullBackupFolder, file) 
-                        
-                        try:
-                            shutil.copy(origin, destination)
-                            if lineCount == 20:
-                                cleanSceen()
-                                header('Backup iniciado.')
-                                lineCount = 0
+                                print('Adicionado [{}] na pasta [{}] em [{}]'.format(file, fileDirectoryByExt, userFolder))
+                                sleep(0.3)
+                                lineCount += 1
+                            except Exception as err:
+                                print('Error: {}'.format(err))
+                                print()
+                                foot()
+                                raise SystemExit()
 
-                            print('Adicionado [{}] na pasta [{}] em [{}]'.format(file, fileDirectoryByExt, userFolder))
-                            sleep(0.3)
-                            lineCount += 1
-                        except Exception as err:
-                            print('Error: {}'.format(err))
-                            print()
-                            foot()
-                            raise SystemExit()
-                        
-                    continue
-    finalInformation(drive)
+                        continue
+
+        finalInformation(drive)
+    else:
+        print()
+        print('A unidade de disco informada não existe.')
                                 
 def main():  
     print("-=-" * 30)
-    print('S I S T E M A  D E  B A C K U P'.center(100))
+    print('S I S T E M A  D E  B A C K U P'.center(95))
     print("-=-" * 30)
-    display()
+    processingCore()
     foot()
 
 
