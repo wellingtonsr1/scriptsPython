@@ -71,7 +71,8 @@ def getDrive():
         foot()
 
 def processingCore():
-    lineCount = 0   
+    lineCount = 0  
+    fileCount = 0 
     drive = getDrive()
     
     header('Backup iniciado')
@@ -88,6 +89,7 @@ def processingCore():
                     # Cria o diretório 'Arquivos_pdf', 'Arquivos_docx' etc
                     fileDirectoryByExt = fileDirectory+ext.replace('.', '')
                     if file.endswith(ext):
+                        fileCount += 1
                         # Cria 'C:\\bkp_NomeMaquina_dataCriaçãoBackup\pastaUsusário\Arquivos_EXT'
                         fullBackupFolder = os.path.join(pathBackupFolder, fileDirectoryByExt)
                         if not os.path.exists(fullBackupFolder):
@@ -110,9 +112,13 @@ def processingCore():
                             print()
                             foot()                        
                     continue
-    finalInformation(drive)
-    
-                                
+    if fileCount != 0:
+        finalInformation(drive)
+    else:
+        print('Não há arquivos para copiar.'.center(95))
+        foot()
+
+
 def main():  
     print("-=-" * 30)
     print('S I S T E M A  D E  B A C K U P'.center(95))
