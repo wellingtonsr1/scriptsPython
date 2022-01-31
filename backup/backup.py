@@ -25,19 +25,20 @@ currentDate = datetime.today().strftime('%d-%m-%Y')
 backupFolder = 'bkp_'+socket.gethostname()+'_'+currentDate
 extList = ['.pdf', '.docx', '.xlsx', '.odt', '.ods']
 fileDirectory = 'Arquivos_'
+lenLength = 30
 
 def header(statusMessage):
     cleanSceen()
-    print("-=-" * 30)
+    print("-=-" * lenLength)
     print("Status: {}".center(25).format(statusMessage), end='')
     print("Máquina: " + socket.gethostname().ljust(20), end='')
     print("Data: " + currentDate.ljust(20))
-    print("-=-" * 30)
+    print("-=-" * lenLength)
     print()
 
 def foot():
     print()
-    print("-=-" * 30)
+    print("-=-" * lenLength)
     print()  
     print('Pressione ENTER pra continuar.')
     os.system('pause > NULL' if os.name == 'nt' else 'continue') 
@@ -100,8 +101,7 @@ def processingCore():
                         try:
                             shutil.copy(origin, destination)
                             if lineCount == 20:
-                                cleanSceen()
-                                header('Backup iniciado.')
+                                header('Backup iniciado')
                                 lineCount = 0
 
                             print('Adicionado [{}] na pasta [{}] em [{}]'.format(file, fileDirectoryByExt, userFolder))
@@ -115,14 +115,15 @@ def processingCore():
     if fileCount != 0:
         finalInformation(drive)
     else:
+        header('Backup abortado')
         print('Não há arquivos para copiar.'.center(95))
         foot()
 
 
 def main():  
-    print("-=-" * 30)
+    print("-=-" * lenLength)
     print('S I S T E M A  D E  B A C K U P'.center(95))
-    print("-=-" * 30)
+    print("-=-" * lenLength)
     processingCore()
     foot()
 
