@@ -1,6 +1,6 @@
 @echo off
 
-cd c:\backup
+mode con:cols=95 lines=30
 C:\Python310\python.exe C:\backup\backup.py
 
-pause
+rem pause
