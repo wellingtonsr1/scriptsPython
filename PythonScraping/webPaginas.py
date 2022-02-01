@@ -18,25 +18,25 @@ from tkinter import *
 import re
 
 
-backgroundColor = "black"
-addressList = ['link_1', 'link_n']   
+background_color = "black"
+address_list = ['link_1', 'link_n']   
 
 
-def displayLoginWindow():
+def display_login_window():
     window = Tk()
     window.title("Login")
-    window['bg'] = backgroundColor
+    window['bg'] = background_color
 
-    lUser = Label(window, text="Usuário:", font="Arial 12 bold italic", bg=backgroundColor, fg='white')
-    lPassword = Label(window, text="Senha:", font="Arial 12 bold italic", bg=backgroundColor, fg='white')
-    userLoginField = Entry(window, width=25)
-    passwordLoginField = Entry(window, width=25, show='*')
-    btn = Button(window, text="Acessar", command=lambda: btnClick(userLoginField.get(), passwordLoginField.get()))
+    label_user = Label(window, text="Usuário:", font="Arial 12 bold italic", bg=background_color, fg='white')
+    label_password = Label(window, text="Senha:", font="Arial 12 bold italic", bg=background_color, fg='white')
+    user_login_field = Entry(window, width=25)
+    password_login_field = Entry(window, width=25, show='*')
+    btn = Button(window, text="Acessar", command=lambda: btn_click(user_login_field.get(), password_login_field.get()))
 
-    lUser.grid(row=0, column=0,pady=20)
-    lPassword.grid(row=1, column=0)
-    userLoginField.grid(row=0, column=1)
-    passwordLoginField.grid(row=1, column=1)
+    label_user.grid(row=0, column=0,pady=20)
+    label_password.grid(row=1, column=0)
+    user_login_field.grid(row=0, column=1)
+    password_login_field.grid(row=1, column=1)
     btn.grid(row=2, column=0, padx=15, pady=20)
 
     window.geometry("245x150+800+400")
@@ -44,18 +44,18 @@ def displayLoginWindow():
     window.mainloop()
 
 
-def btnClick(user, password):
+def btn_click(user, password):
     driver = webdriver.Firefox()
 
-    for idx in range(len(addressList)):
-        if re.search('helpdesk', addressList[idx]):
-            accessData = (addressList[idx], 'login_name', 'login_password', 'submit')
-        elif re.search('mail', addressList[idx]):
-            accessData = (addressList[idx], 'username', 'password', 'ZLoginButton')
-        elif re.search('ramais', addressList[idx]):
-            accessData = (addressList[idx], 'None', 'None', 'None')
-        elif re.search('114', addressList[idx]):
-            accessData = (addressList[idx], 'username', 'password', 'submit')
+    for idx in range(len(address_list)):
+        if re.search('helpdesk', address_list[idx]):
+            access_data = (address_list[idx], 'login_name', 'login_password', 'submit')
+        elif re.search('mail', address_list[idx]):
+            access_data = (address_list[idx], 'username', 'password', 'ZLoginButton')
+        elif re.search('ramais', address_list[idx]):
+            access_data = (address_list[idx], 'None', 'None', 'None')
+        elif re.search('114', address_list[idx]):
+            access_data = (address_list[idx], 'username', 'password', 'submit')
 
         if user == '' or password == '':
             print('-' * 40)
@@ -65,7 +65,7 @@ def btnClick(user, password):
             sleep(3)
             raise SystemExit()
 
-        openWebBrowser(accessData[0], user, password, accessData[1], accessData[2], accessData[3], idx, driver)
+        open_web_browser(access_data[0], user, password, access_data[1], access_data[2], access_data[3], idx, driver)
         
     print('-' * 30)
     print('*******      Done!     *******')
@@ -73,7 +73,7 @@ def btnClick(user, password):
     raise SystemExit()
 
 
-def openWebBrowser(link, user, password, loginId, passowrdId, btnClass, flag, driver):
+def open_web_browser(link, user, password, login_id, passowrd_id, btn_class, flag, driver):
     if flag != 0:
         driver.execute_script("window.open('');") 
         driver.switch_to.window(driver.window_handles[flag])
@@ -82,21 +82,21 @@ def openWebBrowser(link, user, password, loginId, passowrdId, btnClass, flag, dr
     driver.maximize_window() 
     driver.implicitly_wait(20) 
 
-    userElementField = driver.find_element(By.ID, loginId)
-    passwordElementField = driver.find_element(By.ID, passowrdId)
-    btn = driver.find_element(By.CLASS_NAME, btnClass)
-    #btn = driver.find_element(By.ID, btnClass)
+    user_element_field = driver.find_element(By.ID, login_id)
+    password_element_field = driver.find_element(By.ID, passowrd_id)
+    btn = driver.find_element(By.CLASS_NAME, btn_class)
+    #btn = driver.find_element(By.ID, btn_class)
 
     sleep(1)
-    userElementField.send_keys(user)
+    user_element_field.send_keys(user)
     sleep(1.5)
-    passwordElementField.send_keys(password)
+    password_element_field.send_keys(password)
     sleep(1)
     btn.click()
 
 
 if __name__ == '__main__':
-   displayLoginWindow()
+   display_login_window()
 
 
 
