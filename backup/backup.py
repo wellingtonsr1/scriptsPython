@@ -54,12 +54,12 @@ def clean_sceen():
     os.system('cls') 
 
 def get_user_folders():
-    listUserFolders = []
-    for userFolder in os.listdir(root):
-        if os.path.isdir(os.path.join(root, userFolder)):
-            listUserFolders.append(userFolder)    
+    list_user_folders = []
+    for user_folder in os.listdir(root):
+        if os.path.isdir(os.path.join(root, user_folder)):
+            list_user_folders.append(user_folder)    
         continue
-    return listUserFolders
+    return list_user_folders
 
 def get_drive():
     drive = re.sub(r'\s+', '', input("Onde deseja salvar os arquivos? (Tecle ENTER para unidade C:\): ".rjust(66)))
