@@ -54,10 +54,10 @@ def clean_sceen():
     os.system('cls') 
 
 def get_user_folders():
-    list_user_folders = []
-    for userFolder in os.listdir(root):
-        if os.path.isdir(os.path.join(root, userFolder)):
-            list_user_folders.append(userFolder)    
+    list_user_folders = []  
+    for user_folder in os.listdir(root):
+        if os.path.isdir(os.path.join(root, user_folder)):
+            list_user_folders.append(user_folder)    
         continue
     return list_user_folders
 
