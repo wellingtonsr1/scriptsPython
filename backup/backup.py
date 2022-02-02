@@ -73,6 +73,23 @@ def get_drive():
         print('A unidade de disco informada não existe.'.center(95))
         foot()
 
+def report(folderPath):
+    os.chdir(folderPath)
+    file_object = open('report.txt', 'w')
+    for folder, subfolders, files in os.walk(folderPath):
+        # substitui o nome da pasta principal por vazio e conta quantos niveis (\) tem
+        level = folder.replace(folderPath, '').count(os.sep)
+
+        indentation = ' ' * 4 * (level)
+        file_object.write('{}{}/'.format(indentation, os.path.basename(folder)) + '\n')
+
+        subindentation = ' ' * 4 * (level + 1)
+        for f in files:
+            if f.endswith('txt') or f == 'NULL':
+                continue
+            file_object.write('{}{}'.format(subindentation, f) + '\n')
+    file_object.close()
+
 def processing_core():
     line_count = 0  
     file_count = 0 
@@ -121,6 +138,7 @@ def processing_core():
                     continue
                 
     if file_count != 0:
+        report(os.path.join(drive, backup_folder))
         final_information(drive)
     else:
         header('Backup abortado')
