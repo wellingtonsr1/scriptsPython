@@ -75,7 +75,13 @@ def get_drive():
 
 def report(folderPath):
     os.chdir(folderPath)
+
     file_object = open('report.txt', 'w')
+    
+    file_object.write("-=-" * len_length + '\n')
+    file_object.write("Backup realizado em {}".format(current_date).center(95)  + '\n')
+    file_object.write("-=-" * len_length  + '\n')
+
     for folder, subfolders, files in os.walk(folderPath):
         # substitui o nome da pasta principal por vazio e conta quantos niveis (\) tem
         level = folder.replace(folderPath, '').count(os.sep)
@@ -88,6 +94,8 @@ def report(folderPath):
             if f.endswith('txt') or f == 'NULL':
                 continue
             file_object.write('{}{}'.format(subindentation, f) + '\n')
+
+    file_object.write("-=-" * len_length  + '\n')
     file_object.close()
 
 def processing_core():
