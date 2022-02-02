@@ -73,18 +73,18 @@ def get_drive():
         print('A unidade de disco informada não existe.'.center(95))
         foot()
 
-def report(folderPath):
-    os.chdir(folderPath)
+def report(folder_path):
+    os.chdir(folder_path)
 
     file_object = open('report.txt', 'w')
-    
+
     file_object.write("-=-" * len_length + '\n')
     file_object.write("Backup realizado em {}".format(current_date).center(95)  + '\n')
     file_object.write("-=-" * len_length  + '\n')
 
-    for folder, subfolders, files in os.walk(folderPath):
+    for folder, subfolders, files in os.walk(folder_path):
         # substitui o nome da pasta principal por vazio e conta quantos niveis (\) tem
-        level = folder.replace(folderPath, '').count(os.sep)
+        level = folder.replace(folder_path, '').count(os.sep)
 
         indentation = ' ' * 4 * (level)
         file_object.write('{}{}/'.format(indentation, os.path.basename(folder)) + '\n')
