@@ -94,9 +94,8 @@ def report(folder_path):
 
         subindentation = '|' + '_' * 4 * (level + 1)
         for f in files:
-            if f.endswith('txt') or f == 'NULL':
-                continue
-            file_object.write('{}{}'.format(subindentation, f) + '\n')
+            if not f.endswith('txt') or f == 'NULL':
+                file_object.write('{}{}'.format(subindentation, f) + '\n')
 
     file_object.write('-=-' * len_length  + '\n')
     file_object.close()
