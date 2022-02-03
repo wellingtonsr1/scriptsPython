@@ -31,16 +31,16 @@ len_length = 30
 
 def header(status_message):
     clean_sceen()
-    print("-=-" * len_length)
-    print("Status: {}".center(25).format(status_message), end='')
-    print("Máquina: " + socket.gethostname().ljust(20), end='')
-    print("Data: " + current_date.ljust(20))
-    print("-=-" * len_length)
+    print('-=-' * len_length)
+    print('Status: {}'.center(25).format(status_message), end='')
+    print('Máquina: ' + socket.gethostname().ljust(20), end='')
+    print('Data: ' + current_date.ljust(20))
+    print('-=-' * len_length)
     print()
 
 def foot():
     print()
-    print("-=-" * len_length)
+    print('-=-' * len_length)
     print()  
     print('Pressione ENTER pra continuar.')
     os.system('pause > NULL') 
@@ -64,8 +64,8 @@ def get_user_folders():
 def get_drive():
     while True:
         header('Backup iniciado')
-        
-        drive = re.sub(r'\s+', '', input("Onde deseja salvar os arquivos? (Tecle ENTER para unidade C:\): ".rjust(66)))
+
+        drive = re.sub(r'\s+', '', input('Onde deseja salvar os arquivos? (Tecle ENTER para unidade C:\): '.rjust(66)))
         if drive == '':
             drive = 'C'
         drive = drive+':\\'
@@ -79,11 +79,11 @@ def get_drive():
 def report(folder_path):
     os.chdir(folder_path)
 
-    file_object = open('report.txt', 'w')
+    file_object = open('report.txt', 'w', encoding='utf-8')
 
-    file_object.write("-=-" * len_length + '\n')
-    file_object.write("Backup realizado em {}".format(current_date).center(95)  + '\n')
-    file_object.write("-=-" * len_length  + '\n')
+    file_object.write('-=-' * len_length + '\n')
+    file_object.write('Backup realizado em {}'.format(current_date).center(95)  + '\n')
+    file_object.write('-=-' * len_length  + '\n')
 
     for folder, subfolders, files in os.walk(folder_path):
         # substitui o nome da pasta principal por vazio e conta quantos niveis (\) tem
@@ -98,7 +98,7 @@ def report(folder_path):
                 continue
             file_object.write('{}{}'.format(subindentation, f) + '\n')
 
-    file_object.write("-=-" * len_length  + '\n')
+    file_object.write('-=-' * len_length  + '\n')
     file_object.close()
 
 def processing_core():
@@ -155,13 +155,13 @@ def processing_core():
     else:
         header('Backup abortado')
         print('Não há arquivos para copiar.'.center(95))
-        foot()
+        #foot()
 
 
 def main():  
-    print("-=-" * len_length)
+    print('-=-' * len_length)
     print('S I S T E M A  D E  B A C K U P'.center(95))
-    print("-=-" * len_length)
+    print('-=-' * len_length)
     processing_core()
     foot()
 
