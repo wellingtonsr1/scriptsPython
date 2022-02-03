@@ -89,10 +89,10 @@ def report(folder_path):
         # substitui o nome da pasta principal por vazio e conta quantos niveis (\) tem
         level = folder.replace(folder_path, '').count(os.sep)
 
-        indentation = ' ' * 4 * (level)
+        indentation = '|' + '_' * 4 * (level)
         file_object.write('{}{}/'.format(indentation, os.path.basename(folder)) + '\n')
 
-        subindentation = ' ' * 4 * (level + 1)
+        subindentation = '|' + '_' * 4 * (level + 1)
         for f in files:
             if f.endswith('txt') or f == 'NULL':
                 continue
