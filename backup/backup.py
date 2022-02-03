@@ -43,8 +43,8 @@ def foot():
     print("-=-" * len_length)
     print()  
     print('Pressione ENTER pra continuar.')
-    os.system('pause > NULL' if os.name == 'nt' else 'continue') 
-    raise SystemExit()
+    os.system('pause > NULL') 
+    #raise SystemExit()
 
 def final_information(drive):
     header('Backup realizado')
@@ -62,16 +62,19 @@ def get_user_folders():
     return list_user_folders
 
 def get_drive():
-    drive = re.sub(r'\s+', '', input("Onde deseja salvar os arquivos? (Tecle ENTER para unidade C:\): ".rjust(66)))
-    if drive == '':
-        drive = 'C'
-    drive = drive+':\\'
-    if os.path.exists(drive):
-        return drive.upper()
-    else:
-        print()
-        print('A unidade de disco informada não existe.'.center(95))
-        foot()
+    while True:
+        header('Backup iniciado')
+        
+        drive = re.sub(r'\s+', '', input("Onde deseja salvar os arquivos? (Tecle ENTER para unidade C:\): ".rjust(66)))
+        if drive == '':
+            drive = 'C'
+        drive = drive+':\\'
+        if os.path.exists(drive):
+            return drive.upper()
+        else:
+            print()
+            print('A unidade de disco informada não existe.'.center(95))
+            foot()
 
 def report(folder_path):
     os.chdir(folder_path)
@@ -141,7 +144,8 @@ def processing_core():
                         except Exception as err:
                             print('Error: {}'.format(err))
                             print()
-                            foot()   
+                            foot() 
+                            raise SystemExit()  
 
                     continue
                 
