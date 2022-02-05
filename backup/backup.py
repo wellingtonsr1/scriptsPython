@@ -55,7 +55,7 @@ def foot():
 
 def final_information(drive):
     secondary_header('Backup realizado')
-    print(f' Verifique os arquivos em {os.path.join(drive, backup_folder)}'.center(95))
+    print(f'Verifique os arquivos em {os.path.join(drive, backup_folder)}'.center(95))
 
 def clean_sceen():
     os.system('cls') 
