@@ -29,15 +29,22 @@ ext_list = ['.pdf', '.docx', '.xlsx', '.odt', '.ods']
 file_directory = 'Arquivos_'
 len_length = 30
 
-def header(status_message):
+
+def man_header():
     clean_sceen()
     print('-=-' * len_length)
-    print('Status: {}'.center(25).format(status_message), end='')
-    print('Máquina: ' + socket.gethostname().ljust(20), end='')
-    print('Data: ' + current_date.ljust(20))
+    print('S I S T E M A  D E  B A C K U P'.center(95))
+    print('-=-' * len_length)
+
+def secondary_header(status_message):
+    clean_sceen()
+    print('-=-' * len_length)
+    print(f'Status: {status_message}'.rjust(30), end='')
+    print(f'Máquina: {socket.gethostname()}'.center(35), end='')
+    print(f'Data: {current_date}'.ljust(30))
     print('-=-' * len_length)
     print()
-
+    
 def foot():
     print()
     print('-=-' * len_length)
@@ -47,8 +54,8 @@ def foot():
     #raise SystemExit()
 
 def final_information(drive):
-    header('Backup realizado')
-    print(' Verifique os arquivos em {}'.rjust(50).format(os.path.join(drive, backup_folder)))
+    secondary_header('Backup realizado')
+    print(f' Verifique os arquivos em {os.path.join(drive, backup_folder)}'.center(95))
 
 def clean_sceen():
     os.system('cls') 
@@ -63,7 +70,7 @@ def get_user_folders():
 
 def get_drive():
     while True:
-        header('Backup iniciado')
+        man_header()
 
         drive = re.sub(r'\s+', '', input('Onde deseja salvar os arquivos? (Tecle ENTER para unidade C:\): '.rjust(66)))
         if drive == '':
@@ -82,7 +89,7 @@ def report(folder_path):
     file_object = open('report.txt', 'w', encoding='utf-8')
 
     file_object.write('-=-' * len_length + '\n')
-    file_object.write('Backup realizado em {}'.format(current_date).center(95)  + '\n')
+    file_object.write(f'Backup realizado em {current_date}'.center(95)  + '\n')
     file_object.write('-=-' * len_length  + '\n')
 
     for folder, subfolders, files in os.walk(folder_path):
@@ -90,12 +97,12 @@ def report(folder_path):
         level = folder.replace(folder_path, '').count(os.sep)
 
         indentation = '|' + '_' * 4 * (level)
-        file_object.write('{}{}/'.format(indentation, os.path.basename(folder)) + '\n')
+        file_object.write(f'{indentation}{os.path.basename(folder)}/' + '\n')
 
         subindentation = '|' + '_' * 4 * (level + 1)
         for f in files:
             if not f.endswith('txt') or f == 'NULL':
-                file_object.write('{}{}'.format(subindentation, f) + '\n')
+                file_object.write(f'{subindentation}{f}' + '\n')
 
     file_object.write('-=-' * len_length  + '\n')
     file_object.close()
@@ -105,7 +112,7 @@ def processing_core():
     file_count = 0 
     drive = get_drive()
     
-    header('Backup iniciado')
+    secondary_header('Backup iniciado')
 
     for user_folder in get_user_folders():
         # C:\\bkp_NomeMaquina_dataBackup\pastaUsusario
@@ -134,14 +141,14 @@ def processing_core():
                         try:
                             shutil.copy(origin, destination)
                             if line_count == 20:
-                                header('Backup iniciado')
+                                secondary_header('Backup iniciado')
                                 line_count = 0
 
-                            print('Adicionado [{}] na pasta [{}] em [{}]'.format(file_name, file_directory_by_ext, user_folder))
+                            print(f'Adicionado [{file_name}] na pasta [{file_directory_by_ext}] em [{user_folder}]')
                             sleep(0.3)
                             line_count += 1
                         except Exception as err:
-                            print('Error: {}'.format(err))
+                            print(f'Error: {err}')
                             print()
                             foot() 
                             raise SystemExit()  
@@ -152,15 +159,12 @@ def processing_core():
         report(os.path.join(drive, backup_folder))
         final_information(drive)
     else:
-        header('Backup abortado')
+        secondary_header('Backup abortado')
         print('Não há arquivos para copiar.'.center(95))
         #foot()
 
 
 def main():  
-    print('-=-' * len_length)
-    print('S I S T E M A  D E  B A C K U P'.center(95))
-    print('-=-' * len_length)
     processing_core()
     foot()
 
