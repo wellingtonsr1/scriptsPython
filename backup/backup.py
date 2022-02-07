@@ -20,7 +20,13 @@ import socket
 import re
 from datetime import datetime
 from time import sleep
+import logging
 
+logging.basicConfig(
+    filename='backup/logs/backup.log', 
+    level=logging.DEBUG, 
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 
 root = 'C:\\users'
 current_date = datetime.today().strftime('%d-%m-%Y')
@@ -37,30 +43,35 @@ def man_header():
     print('-=-' * len_length)
 
 def secondary_header(status_message):
+    logging.info(status_message)
     clean_sceen()
     print('-=-' * len_length)
     print(f'Status: {status_message}'.rjust(30), end='')
     print(f'Máquina: {socket.gethostname()}'.center(35), end='')
     print(f'Data: {current_date}'.ljust(30))
     print('-=-' * len_length)
-    print()
+    print('')
     
 def foot():
-    print()
+    print('')
     print('-=-' * len_length)
-    print()  
+    print('')  
     print('Pressione ENTER pra continuar.')
     os.system('pause > NULL') 
     #raise SystemExit()
 
 def final_information(drive):
+    logging.info('Backup realizado')
     secondary_header('Backup realizado')
     print(f'Verifique os arquivos em {os.path.join(drive, backup_folder)}'.center(95))
+    
 
 def clean_sceen():
     os.system('cls') 
 
 def get_user_folders():
+    logging.info('Obtendo as pasta dos usuários.')
+
     list_user_folders = []  
     for user_folder in os.listdir(root):
         if os.path.isdir(os.path.join(root, user_folder)):
@@ -69,21 +80,26 @@ def get_user_folders():
     return list_user_folders
 
 def get_drive():
+    logging.info('Obtendo a unidade de disco')
+
     while True:
         man_header()
 
         drive = re.sub(r'\s+', '', input('Onde deseja salvar os arquivos? (Tecle ENTER para unidade C:\): '.rjust(66)))
-        if drive == '':
+        if not drive:
             drive = 'C'
         drive = drive+':\\'
         if os.path.exists(drive):
             return drive.upper()
         else:
-            print()
+            print('')
             print('A unidade de disco informada não existe.'.center(95))
+            logging.warning(f'A unidade {drive} não existe.')
             foot()
 
 def report(folder_path):
+    logging.info('Gerando o report.txt')
+
     os.chdir(folder_path)
 
     file_object = open('report.txt', 'w', encoding='utf-8')
@@ -106,6 +122,8 @@ def report(folder_path):
 
     file_object.write('-=-' * len_length  + '\n')
     file_object.close()
+    
+    logging.info('Arquivo report.txt gerado')
 
 def processing_core():
     line_count = 0  
@@ -113,6 +131,7 @@ def processing_core():
     drive = get_drive()
     
     secondary_header('Backup iniciado')
+    logging.info('Backup iniciado')
 
     for user_folder in get_user_folders():
         # C:\\bkp_NomeMaquina_dataBackup\pastaUsusario
@@ -145,11 +164,12 @@ def processing_core():
                                 line_count = 0
 
                             print(f'Adicionado [{file_name}] na pasta [{file_directory_by_ext}] em [{user_folder}]')
+                            logging.info(f'Adicionado [{file_name}] na pasta [{file_directory_by_ext}] em [{user_folder}]')
                             sleep(0.3)
                             line_count += 1
                         except Exception as err:
                             print(f'Error: {err}')
-                            print()
+                            print('')
                             foot() 
                             raise SystemExit()  
 
@@ -163,8 +183,8 @@ def processing_core():
         print('Não há arquivos para copiar.'.center(95))
         #foot()
 
-
 def main():  
+    logging.info('Programa iniciado.')
     processing_core()
     foot()
 
