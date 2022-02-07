@@ -23,7 +23,7 @@ from time import sleep
 import logging
 
 logging.basicConfig(
-    filename='backup/logs/backup.log', 
+    filename='C:\\backupPastasUsuarios\\logs\\backup.log', 
     level=logging.DEBUG, 
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
@@ -43,7 +43,7 @@ def man_header():
     print('-=-' * len_length)
 
 def secondary_header(status_message):
-    logging.info(status_message)
+    #logging.info(status_message)
     clean_sceen()
     print('-=-' * len_length)
     print(f'Status: {status_message}'.rjust(30), end='')
@@ -61,11 +61,10 @@ def foot():
     #raise SystemExit()
 
 def final_information(drive):
-    logging.info('Backup realizado')
     secondary_header('Backup realizado')
     print(f'Verifique os arquivos em {os.path.join(drive, backup_folder)}'.center(95))
+    logging.info('Backup realizado')
     
-
 def clean_sceen():
     os.system('cls') 
 
@@ -126,14 +125,16 @@ def report(folder_path):
     logging.info('Arquivo report.txt gerado')
 
 def processing_core():
+    logging.info('Processamento de backup iniciado')
+
     line_count = 0  
     file_count = 0 
     drive = get_drive()
     
     secondary_header('Backup iniciado')
-    logging.info('Backup iniciado')
-
+    
     for user_folder in get_user_folders():
+        #logging.info('Backup iniciado')
         # C:\\bkp_NomeMaquina_dataBackup\pastaUsusario
         path_backup_folder = os.path.join(os.path.join(drive, backup_folder), user_folder)
 
@@ -159,6 +160,7 @@ def processing_core():
                         
                         try:
                             shutil.copy(origin, destination)
+
                             if line_count == 20:
                                 secondary_header('Backup iniciado')
                                 line_count = 0
@@ -169,6 +171,7 @@ def processing_core():
                             line_count += 1
                         except Exception as err:
                             print(f'Error: {err}')
+                            logging.error(err)
                             print('')
                             foot() 
                             raise SystemExit()  
@@ -182,6 +185,8 @@ def processing_core():
         secondary_header('Backup abortado')
         print('Não há arquivos para copiar.'.center(95))
         #foot()
+
+    logging.info('Processamento de bacukp finalizado')
 
 def main():  
     logging.info('Programa iniciado.')
