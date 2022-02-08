@@ -31,7 +31,7 @@ logging.basicConfig(
 root = 'C:\\users'
 current_date = datetime.today().strftime('%d-%m-%Y')
 backup_folder = 'bkp_'+socket.gethostname()+'_'+current_date
-ext_list = ['.pdf', '.docx', '.xlsx', '.odt', '.ods']
+ext_list = ['.pdf', '.docx', '.xlsx', '.rtf', '.odt', '.ods', '.jpg', '.jpeg', '.png']
 file_directory = 'Arquivos_'
 len_length = 30
 
@@ -52,7 +52,7 @@ def secondary_header(status_message):
     print('-=-' * len_length)
     print('')
     
-def foot():
+def footer():
     print('')
     print('-=-' * len_length)
     print('')  
@@ -94,7 +94,7 @@ def get_drive():
             print('')
             print('A unidade de disco informada não existe.'.center(95))
             logging.warning(f'A unidade {drive} não existe.')
-            foot()
+            footer()
 
 def report(folder_path):
     logging.info('Gerando o report.txt')
@@ -134,7 +134,6 @@ def processing_core():
     secondary_header('Backup iniciado')
     
     for user_folder in get_user_folders():
-        #logging.info('Backup iniciado')
         # C:\\bkp_NomeMaquina_dataBackup\pastaUsusario
         path_backup_folder = os.path.join(os.path.join(drive, backup_folder), user_folder)
 
@@ -173,7 +172,7 @@ def processing_core():
                             print(f'Error: {err}')
                             logging.error(err)
                             print('')
-                            foot() 
+                            footer() 
                             raise SystemExit()  
 
                     continue
@@ -184,14 +183,14 @@ def processing_core():
     else:
         secondary_header('Backup abortado')
         print('Não há arquivos para copiar.'.center(95))
-        #foot()
+        #footer()
 
     logging.info('Processamento de bacukp finalizado')
 
 def main():  
     logging.info('Programa iniciado.')
     processing_core()
-    foot()
+    footer()
 
 
 if __name__ == '__main__':
