@@ -31,7 +31,7 @@ logging.basicConfig(
 root = 'C:\\users'
 current_date = datetime.today().strftime('%d-%m-%Y')
 backup_folder = 'bkp_'+socket.gethostname()+'_'+current_date
-ext_list = ['.pdf', '.docx', '.xlsx', '.rtf', '.odt', '.ods', '.jpg', '.jpeg', '.png']
+ext_list = ['.pdf', '.docx', '.xlsx', '.rtf', '.odt', '.ods', '.jpg', '.jpeg']
 file_directory = 'Arquivos_'
 len_length = 30
 
