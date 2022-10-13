@@ -17,6 +17,10 @@ Criado usando:
 Testado nos Sistemas Operacionais:
     Linux debian 10, Codenome: Buster, Arquitetura: x86_64
     Microssoft Windows 8.1, Arquitetura: 32 bits
+
+Dependências:
+   tqdm (Use 'pip3 install tqdm' para instalá-lo)
+   progressbar (Use 'pip3 install progressbar' para instalá-lo)
 '''
 
 import os
