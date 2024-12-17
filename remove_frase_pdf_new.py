@@ -15,8 +15,8 @@ def remover_frase_pdf(input_pdf, frase, output_pdf):
             page.add_redact_annot(inst)
             page.apply_redactions()
 
-    # Salvar o novo PDF
-    pdf_document.save(output_pdf)
+            # Salvar o novo PDF
+            pdf_document.save(output_pdf)
     pdf_document.close()
 
 if __name__ == "__main__":
